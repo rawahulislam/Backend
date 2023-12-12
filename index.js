@@ -15,6 +15,7 @@ app.get("/data", (req, res) => {
 
 let storedData = readDataFromFile();
 
+
 app.post("/post", (req, res) => {
   const password = req.body.password;
   const requestData = req.body;
