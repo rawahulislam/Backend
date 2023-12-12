@@ -2,10 +2,12 @@ const express = require("express");
 const app = express();
 const data = require("./data.json");
 const fs = require("fs");
+const cors = require('cors');
+
 app.use(express.json());
 
-app.listen(3000, () =>
-  console.log("Server listening at port http://127.0.0.1:3000/")
+app.listen(3001, () =>
+  console.log("Server listening at port http://127.0.0.1:3001/")
 );
 
 const Storedpassword = "rawah21";
