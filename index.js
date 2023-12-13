@@ -14,7 +14,8 @@ app.listen(3001, () =>
 
 const Storedpassword = "rawah21";
 app.get("/data", (req, res) => {
-  res.send(data);
+  const userDataWithoutPassword = data.map(({ password, ...user }) => user);
+  res.json(userDataWithoutPassword);
 });
 
 let storedData = readDataFromFile();
@@ -24,11 +25,11 @@ app.post("/post", (req, res) => {
   const password = req.body.password;
   const requestData = req.body;
   if (Storedpassword !== password) {
-    return res.send("wrong password");
+    return res.status(401).json({ error: "Invalid credentials" });
   } else storedData.push(requestData);
   saveDataToJsonFile(storedData);
 
-  res.send(requestData);
+  res.sendStatus(200).end;
 });
 
 function saveDataToJsonFile(data) {
