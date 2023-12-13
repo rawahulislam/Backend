@@ -21,6 +21,27 @@ app.get("/data", (req, res) => {
 let storedData = readDataFromFile();
 
 
+app.delete('/delete/:name',(req,res) => {
+  const deleteName = req.params.name;
+  console.log(deleteName)
+  const rawData = fs.readFileSync('data.json');
+  let jsonData = JSON.parse(rawData);
+
+  const indexToDelete = jsonData.findIndex(item => item.name === deleteName);
+
+  if (indexToDelete !== -1) {
+    jsonData.splice(indexToDelete, 1);
+
+    fs.writeFileSync('data.json', JSON.stringify(jsonData, null, 2));
+
+    res.send(`Deleted entry with name: ${deleteName}`);
+  } else {
+    res.status(404).send(`Entry with name ${deleteName} not found`);
+  }
+
+})
+
+
 app.post("/post", (req, res) => {
   const password = req.body.password;
   const requestData = req.body;
